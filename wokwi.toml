@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'build/NeoPixel_SSD1306_BitSync.uf2'
+elf = 'build/NeoPixel_SSD1306_BitSync.elf'

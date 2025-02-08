@@ -19,7 +19,7 @@ set(sdkVersion 2.1.0)
 set(toolchainVersion 13_3_Rel1)
 set(picotoolVersion 2.1.0)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
-if (EXISTS ${picoVscode})
+if(EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
 # ====================================================================================
@@ -35,30 +35,43 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(NeoPixel_SSD1306_BitSync NeoPixel_SSD1306_BitSync.c )
+add_executable(NeoPixel_SSD1306_BitSync
+    src/NeoPixel_SSD1306_BitSync.c
+    src/matriz_Numeros/matriz_Numeros.c
+    src/buttons/buttons.c
+    src/inc/ssd1306.c
+    src/led/led.c
+    src/display/display.c
+)
 
 pico_set_program_name(NeoPixel_SSD1306_BitSync "NeoPixel_SSD1306_BitSync")
 pico_set_program_version(NeoPixel_SSD1306_BitSync "0.1")
 
+pico_generate_pio_header(NeoPixel_SSD1306_BitSync ${CMAKE_CURRENT_LIST_DIR}/ws2812.pio)
+
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(NeoPixel_SSD1306_BitSync 0)
-pico_enable_stdio_usb(NeoPixel_SSD1306_BitSync 0)
+pico_enable_stdio_uart(NeoPixel_SSD1306_BitSync 1)
+pico_enable_stdio_usb(NeoPixel_SSD1306_BitSync 1)
 
 # Add the standard library to the build
 target_link_libraries(NeoPixel_SSD1306_BitSync
-        pico_stdlib)
+    pico_stdlib)
 
 # Add the standard include files to the build
 target_include_directories(NeoPixel_SSD1306_BitSync PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(NeoPixel_SSD1306_BitSync 
-        hardware_spi
-        hardware_i2c
-        
-        )
+target_link_libraries(NeoPixel_SSD1306_BitSync
+    pico_stdlib
+    hardware_spi
+    hardware_i2c
+    hardware_adc
+    hardware_pio
+    hardware_timer
+    hardware_clocks
+)
 
 pico_add_extra_outputs(NeoPixel_SSD1306_BitSync)
 

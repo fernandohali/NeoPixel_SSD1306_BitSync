@@ -1,28 +1,31 @@
-.programa ws2812b
+.program ws2812
+.side_set 1
 
 .wrap_target
-    out x, 1  // Envia o valor de x para o pino
-    jmp !x do_zero  // Se x for 0, salta para a etiqueta "do_zero"
-do_one:
-    set pins, 1 [4]  // Define o valor 1 nos 4 pinos de saída
-    jmp cont  // Salta para a etiqueta "cont"
-do_zero:
-    set pins, 1 [2]  // Define o valor 1 no pino 2
-    set pins, 0 [2]  // Define o valor 0 no pino 2
-cont:
-    set pins, 0 [1]  // Define o valor 0 no pino 1
+    out x, 1        side 0 [2]
+    jmp !x, 3       side 1 [1]
+    jmp 0           side 1 [4]
+    nop             side 0 [4]
 .wrap
 
-% c-sdk {
-static inline void ws2812b_pio_init(PIO pio, uint sm, uint offset, uint pin) {
 
-    pio_sm_config c = ws2812b_program_get_default_config(offset);
-  
+% c-sdk {
+static inline void ws2812_program_init(PIO pio, uint sm, uint offset, uint pin, uint speed, bool is_rgbw) {
     // Inicializa o pino GPIO
     pio_gpio_init(pio, pin);
 
     // Define a direção do pino como saída no PIO
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+
+    // Carrega a configuração do programa PIO
+    pio_sm_config c = ws2812_program_get_default_config(offset);
+
+    // Configura o relógio para a velocidade especificada
+    float div = clock_get_hz(clk_sys) / (float)speed;
+    sm_config_set_clkdiv(&c, div);
+
+    // Ajusta a configuração com base no parâmetro is_rgbw
+    sm_config_set_out_shift(&c, false, is_rgbw, 24);  // Para RGBW ou RGB
 
     // Carrega a configuração e começa a execução do programa
     pio_sm_init(pio, sm, offset, &c);
@@ -30,22 +33,13 @@ static inline void ws2812b_pio_init(PIO pio, uint sm, uint offset, uint pin) {
     // Habilita a máquina de estados PIO
     pio_sm_set_enabled(pio, sm, true);
 
-    //----------------------------
-    // Define o pino como parte do grupo de saída, ou seja, será configurado pelo comando "set"
+    // Configura o pino como parte do grupo de saída
     sm_config_set_set_pins(&c, pin, 1);
 
-    // Define o relógio do PIO para 8MHz, o que dá 10 ciclos por dígito binário do LED
-    float div = clock_get_hz(clk_sys) / 8000000.0;
-    sm_config_set_clkdiv(&c, div);
-
-    // Atribui todo o espaço da FIFO para TX (não estamos usando RX)
+    // Configura a FIFO do PIO para apenas transmissão
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
 
-    // Configura para deslocar à esquerda, usa autopull e a próxima extração de 24 bits
-    sm_config_set_out_shift(&c, false, true, 24);
-
-    // Define o valor "sticky" para continuar enviando o último valor setado. Outras opções são desativadas.
+    // Define o valor "sticky" para continuar enviando o último valor setado
     sm_config_set_out_special(&c, true, false, false);
-   
 }
 %}
