@@ -1,12 +1,14 @@
-#ifndef _BUTTONS_H
-#define _BUTTONS_H
+#ifndef BUTTONS_H
+#define BUTTONS_H
 
-#include <stdio.h>
-#include "../matriz_Numeros/matriz_Numeros.h"
+#include "pico/stdlib.h"
+#include "pico/types.h"
+#include <stdint.h>
 
-#define BUTTON_A 5 // Pino do botão A
-#define BUTTON_B 6 // Pino do botão B
+#define BUTTON_A 5
+#define BUTTON_B 6
 
 void init_buttons();
+void gpio_irq_handler(uint gpio, uint32_t events);
 
-#endif
+#endif // BUTTONS_H
