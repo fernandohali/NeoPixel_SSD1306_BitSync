@@ -27,7 +27,7 @@ void init_display(ssd1306_t *ssd)
 
 void draw_content(ssd1306_t *ssd, char digitado)
 {
-    printf("Caractere recebido: %c\n", digitado);
+    /*    printf("Caractere recebido: %c\n", digitado); */
 
     // Interpreta o caractere e exibe no display
     interpretacao_do_caractere(ssd, digitado);
@@ -35,7 +35,7 @@ void draw_content(ssd1306_t *ssd, char digitado)
     // Se for número, exibe na matriz de LEDs
     if (digitado >= '0' && digitado <= '9')
     {
-        printf("Caractere matriz: %c\n", digitado);
+        /* printf("Caractere matriz: %c\n", digitado); */
         npSetPattern(digitado); // Converte o caractere para o número correspondente
     }
     else
@@ -43,7 +43,7 @@ void draw_content(ssd1306_t *ssd, char digitado)
         limpar_matriz(); // Limpa a matriz se não for um número
     }
 
-    sleep_ms(100);
+    sleep_ms(1000);
 }
 
 void interpretacao_do_caractere(ssd1306_t *ssd, char caractere)
@@ -65,6 +65,15 @@ void interpretacao_do_caractere(ssd1306_t *ssd, char caractere)
     // Atualiza o display
     ssd1306_fill(ssd, false);
     ssd1306_rect(ssd, 3, 3, 122, 58, true, false);
-    ssd1306_draw_string(ssd, mensagem, 8, 10);
+    ssd1306_draw_string(ssd, mensagem, 8, 32);
+    ssd1306_send_data(ssd);
+}
+
+void draw_content_nunb(ssd1306_t *ssd, const char *msg)
+
+{ // Atualiza o display
+    ssd1306_fill(ssd, false);
+    ssd1306_rect(ssd, 3, 3, 122, 58, true, false);
+    ssd1306_draw_string(ssd, (char *)msg, 8, 28);
     ssd1306_send_data(ssd);
 }

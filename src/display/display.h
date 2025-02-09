@@ -10,7 +10,10 @@
 
 // Protótipos das funções
 void init_display(ssd1306_t *ssd);
-void draw_content(ssd1306_t *ssd, char digitado);
+
 void interpretacao_do_caractere(ssd1306_t *ssd, char caractere);
+
+void draw_content(ssd1306_t *ssd, char msg);
+void draw_content_nunb(ssd1306_t *ssd, const char *msg);
 
 #endif
