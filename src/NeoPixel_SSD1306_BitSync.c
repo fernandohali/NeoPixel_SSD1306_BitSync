@@ -25,6 +25,11 @@ uint offset;
 
 int main()
 {
+    /*
+    Toda a estrtura do código foi pensando de forma que o código seja
+    de fácil de ler, da maneira que foi organizado,
+    facilita a manutenção e a adição de novas funcionalidades.
+    */
     char valor = '\0';
 
     // Inicializa a comunicação serial USB
@@ -32,6 +37,8 @@ int main()
 
     // Inicializa os LEDs e os botões
     init_buttons();
+
+    init_led();
 
     // Inicializa o display
     init_display(&ssd);
@@ -54,8 +61,9 @@ int main()
                 printf("Caractere digitado: %c\n", valor);
                 draw_content(&ssd, valor);
             }
-            sleep_ms(1000);
+            sleep_ms(100);
         }
+        sleep_ms(100);
     }
 
     return 0;
