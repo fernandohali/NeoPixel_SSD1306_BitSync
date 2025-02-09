@@ -37,14 +37,6 @@
     { "type": "wokwi-neopixel", "id": "rgb24", "top": 237.28, "left": -431.93, "attrs": {} },
     { "type": "wokwi-neopixel", "id": "rgb25", "top": 237.28, "left": -739.13, "attrs": {} },
     {
-      "type": "wokwi-resistor",
-      "id": "r1",
-      "top": 91.2,
-      "left": -326.95,
-      "rotate": 90,
-      "attrs": { "value": "220" }
-    },
-    {
       "type": "wokwi-pushbutton",
       "id": "btn1",
       "top": 47.9,
@@ -61,18 +53,41 @@
       "attrs": { "color": "green" }
     },
     {
-      "type": "wokwi-rgb-led",
-      "id": "rgb26",
-      "top": -15.2,
-      "left": -315.7,
-      "attrs": { "common": "anode" }
-    },
-    {
       "type": "board-ssd1306",
       "id": "oled1",
       "top": 243.14,
       "left": -230.17,
       "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -3.6,
+      "left": -361,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -3.6,
+      "left": -293.8,
+      "attrs": { "color": "blue" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 81.6,
+      "left": -374.95,
+      "rotate": 90,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 81.6,
+      "left": -307.75,
+      "rotate": 90,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
@@ -153,28 +168,10 @@
     [ "bb1:bn.10", "bb1:bn.11", "black", [ "v0" ] ],
     [ "bb1:bn.15", "bb1:bn.16", "black", [ "v0" ] ],
     [ "bb1:bn.20", "bb1:bn.21", "black", [ "v0" ] ],
-    [ "bb1:bn.5", "bb1:6b.j", "black", [ "v0" ] ],
     [ "bb1:bn.6", "bb1:bn.5", "black", [ "v0" ] ],
     [ "bb1:bn.12", "bb1:15b.h", "black", [ "v0" ] ],
     [ "bb1:bn.17", "bb1:21b.h", "black", [ "v0" ] ],
     [ "rgb24:DIN", "pico:GP7", "green", [ "v-19.98", "h526.13", "v-124.8" ] ],
-    [ "r1:1", "bb1:6t.e", "", [ "$bb" ] ],
-    [ "r1:2", "bb1:6b.i", "", [ "$bb" ] ],
-    [ "btn1:1.l", "bb1:17t.b", "", [ "$bb" ] ],
-    [ "btn1:2.l", "bb1:15t.b", "", [ "$bb" ] ],
-    [ "btn1:1.r", "bb1:17b.g", "", [ "$bb" ] ],
-    [ "btn1:2.r", "bb1:15b.g", "", [ "$bb" ] ],
-    [ "btn2:1.l", "bb1:23t.b", "", [ "$bb" ] ],
-    [ "btn2:2.l", "bb1:21t.b", "", [ "$bb" ] ],
-    [ "btn2:1.r", "bb1:23b.g", "", [ "$bb" ] ],
-    [ "btn2:2.r", "bb1:21b.g", "", [ "$bb" ] ],
-    [ "rgb26:R", "bb1:5t.a", "", [ "$bb" ] ],
-    [ "rgb26:COM", "bb1:6t.b", "", [ "$bb" ] ],
-    [ "rgb26:G", "bb1:7t.a", "", [ "$bb" ] ],
-    [ "rgb26:B", "bb1:8t.a", "", [ "$bb" ] ],
-    [ "pico:GP13", "bb1:5t.e", "red", [ "h-9.6", "v57.64", "h-432" ] ],
-    [ "pico:GP12", "bb1:8t.e", "blue", [ "h-9.6", "v57.64", "h-403.2" ] ],
-    [ "pico:GP11", "bb1:7t.e", "green", [ "h-9.6", "v57.6", "h-412.8" ] ],
     [ "pico:GP5", "bb1:17b.j", "green", [ "h-172.8", "v124.8", "h-153.6" ] ],
     [ "pico:GP6", "bb1:23b.j", "green", [ "h-163.2", "v105.6", "h-105.6" ] ],
     [ "pico:GND.4", "bb1:bn.25", "black", [ "h-28.8", "v0.04", "h-172.8", "v1.3" ] ],
@@ -183,7 +180,27 @@
     [ "bb1:bn.13", "oled1:GND", "black", [ "v0" ] ],
     [ "bb1:bp.15", "oled1:VCC", "red", [ "v0" ] ],
     [ "pico:GP15", "oled1:SCL", "violet", [ "h-153.6", "v38.44", "h-153.6" ] ],
-    [ "pico:GP14", "oled1:SDA", "white", [ "h-144", "v57.64", "h-153.6" ] ]
+    [ "pico:GP14", "oled1:SDA", "white", [ "h-144", "v57.64", "h-153.6" ] ],
+    [ "pico:GP11", "bb1:2t.e", "green", [ "h-9.6", "v57.6", "h-460.8" ] ],
+    [ "btn1:1.l", "bb1:17t.b", "", [ "$bb" ] ],
+    [ "btn1:2.l", "bb1:15t.b", "", [ "$bb" ] ],
+    [ "btn1:1.r", "bb1:17b.g", "", [ "$bb" ] ],
+    [ "btn1:2.r", "bb1:15b.g", "", [ "$bb" ] ],
+    [ "btn2:1.l", "bb1:23t.b", "", [ "$bb" ] ],
+    [ "btn2:2.l", "bb1:21t.b", "", [ "$bb" ] ],
+    [ "btn2:1.r", "bb1:23b.g", "", [ "$bb" ] ],
+    [ "btn2:2.r", "bb1:21b.g", "", [ "$bb" ] ],
+    [ "r1:1", "bb1:1t.d", "", [ "$bb" ] ],
+    [ "r1:2", "bb1:1b.h", "", [ "$bb" ] ],
+    [ "r2:1", "bb1:8t.d", "", [ "$bb" ] ],
+    [ "r2:2", "bb1:8b.h", "", [ "$bb" ] ],
+    [ "led2:A", "bb1:9t.b", "", [ "$bb" ] ],
+    [ "led2:C", "bb1:8t.b", "", [ "$bb" ] ],
+    [ "led1:A", "bb1:2t.b", "", [ "$bb" ] ],
+    [ "led1:C", "bb1:1t.b", "", [ "$bb" ] ],
+    [ "bb1:bn.2", "bb1:1b.j", "black", [ "v-20.5", "h1.6" ] ],
+    [ "bb1:bn.7", "bb1:8b.j", "black", [ "v-20.5", "h-8" ] ],
+    [ "pico:GP12", "bb1:9t.e", "blue", [ "h-9.6", "v57.64", "h-393.6" ] ]
   ],
   "dependencies": {}
 }
