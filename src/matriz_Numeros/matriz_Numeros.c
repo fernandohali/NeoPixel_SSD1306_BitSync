@@ -138,3 +138,10 @@ void display_number(int buffer[5][5], uint8_t r, uint8_t g, uint8_t b)
         }
     }
 }
+
+// Limpa o buffer de pixels.
+void limpar_matriz(void)
+{
+    for (uint i = 0; i < NUM_PIXELS; ++i)
+        put_pixel(0); // Desliga todos os LEDs
+}
