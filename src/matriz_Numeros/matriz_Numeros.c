@@ -11,9 +11,9 @@ static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b);
 void display_number(int buffer[5][5], uint8_t r, uint8_t g, uint8_t b);
 
 // Variáveis globais para armazenar a cor (Entre 0 e 255 para intensidade)
-uint8_t led_r = 64; // 25% de 255
-uint8_t led_g = 64;
-uint8_t led_b = 64;
+uint8_t led_r = 255; // 25% de 255
+uint8_t led_g = 0;
+uint8_t led_b = 0;
 
 // Definição da matriz de números
 const int digits[10][NUM_PIXELS][5] = {
@@ -104,35 +104,36 @@ static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b)
 void npSetPattern(char number)
 {
     int num = number - '0'; // Converte o caractere para o número correspondente
-    printf("Caractere matriz na matriz: %c\n", number);
-    int r = led_r;
+
+      int r = led_r;
     int g = led_g;
     int b = led_b;
 
     int buffer[5][5]; // Definição correta da matriz temporária
 
     // Verifique os valores diretamente de digits[num]
-    printf("Matriz para o número %d:\n", num);
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            printf("%d ", digits[num][i][j]);
-        }
-        printf("\n");
-    }
-
+    /*  printf("Matriz para o número %d:\n", num);
+     for (int i = 0; i < 5; i++)
+     {
+         for (int j = 0; j < 5; j++)
+         {
+             printf("%d ", digits[num][i][j]);
+         }
+         printf("\n");
+     }
+  */
     // Agora preenche o buffer
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
-            buffer[i][j] = digits[num][4 - i][j];               // Inverte as linhas ao copiar os dados
-            printf("buffer[%d][%d]: %d\n", i, j, buffer[i][j]); // Imprime os valores do buffer
+            buffer[i][j] = digits[num][4 - i][j];                     // Inverte as linhas ao copiar os dados
+            /* printf("buffer[%d][%d]: %d\n", i, j, buffer[i][j]); */ // Imprime os valores do buffer
         }
     }
 
     display_number(buffer, r, g, b);
+    sleep_ms(100);
 }
 
 void display_number(int buffer[5][5], uint8_t r, uint8_t g, uint8_t b)
