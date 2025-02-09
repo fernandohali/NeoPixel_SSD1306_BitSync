@@ -101,19 +101,34 @@ static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b)
 }
 
 // Função para definir o padrão do número
-void npSetPattern(int number)
+void npSetPattern(char number)
 {
+    int num = number - '0'; // Converte o caractere para o número correspondente
+    printf("Caractere matriz na matriz: %c\n", number);
     int r = led_r;
     int g = led_g;
     int b = led_b;
 
     int buffer[5][5]; // Definição correta da matriz temporária
 
+    // Verifique os valores diretamente de digits[num]
+    printf("Matriz para o número %d:\n", num);
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 5; j++)
         {
-            buffer[i][j] = digits[number][4 - i][j]; // Inverte as linhas ao copiar os dados
+            printf("%d ", digits[num][i][j]);
+        }
+        printf("\n");
+    }
+
+    // Agora preenche o buffer
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            buffer[i][j] = digits[num][4 - i][j];               // Inverte as linhas ao copiar os dados
+            printf("buffer[%d][%d]: %d\n", i, j, buffer[i][j]); // Imprime os valores do buffer
         }
     }
 
@@ -126,7 +141,6 @@ void display_number(int buffer[5][5], uint8_t r, uint8_t g, uint8_t b)
     {
         for (int j = 0; j < 5; j++)
         {
-
             if (buffer[i][j])
             {
                 put_pixel(urgb_u32(r, g, b));

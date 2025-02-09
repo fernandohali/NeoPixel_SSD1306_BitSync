@@ -7,7 +7,7 @@
 
 extern const int digits[10][NUM_PIXELS][5]; // Declaração da matriz de números
 
-void npSetPattern(int number); // Função para definir o padrão do número
+void npSetPattern(char number); // Função para definir o padrão do número
 void limpar_matriz(void);
 
 #endif

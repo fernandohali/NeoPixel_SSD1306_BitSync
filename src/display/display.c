@@ -6,7 +6,6 @@
 #include "../inc/ssd1306.h"
 #include "../inc/font.h"
 #include "display.h"
-#include "../matriz_Numeros/matriz_Numeros.h"
 
 void init_display(ssd1306_t *ssd)
 {
@@ -33,15 +32,16 @@ void draw_content(ssd1306_t *ssd, char digitado)
     // Interpreta o caractere e exibe no display
     interpretacao_do_caractere(ssd, digitado);
 
-    /* // Se for número, exibe na matriz
+    // Se for número, exibe na matriz de LEDs
     if (digitado >= '0' && digitado <= '9')
     {
-        npSetPattern(digitado - '0');
+        printf("Caractere matriz: %c\n", digitado);
+        npSetPattern(digitado); // Converte o caractere para o número correspondente
     }
     else
     {
-        limpar_matriz();
-    } */
+        limpar_matriz(); // Limpa a matriz se não for um número
+    }
 
     sleep_ms(100);
 }

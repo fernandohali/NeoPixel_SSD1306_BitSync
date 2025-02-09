@@ -1,6 +1,7 @@
 #ifndef _DISPLAY_H
 #define _DISPLAY_H
 
+#include "../matriz_Numeros/matriz_Numeros.h"
 // Definições do I2C
 #define I2C_PORT i2c1
 #define I2C_SDA 14
